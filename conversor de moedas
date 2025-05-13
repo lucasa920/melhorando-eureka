@@ -1,0 +1,85 @@
+
+java_code = """
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+public class ConversorMoedasSwing extends JFrame {
+    private JTextField campoValor;
+    private JComboBox<String> comboMoedas;
+    private JLabel resultadoLabel;
+
+    public ConversorMoedasSwing() {
+        setTitle("Conversor de Moedas");
+        setSize(400, 200);
+        setDefaultCloseOperation(EXIT_ON_CLOSE);
+        setLayout(new GridLayout(4, 1));
+
+        // Campo de entrada
+        campoValor = new JTextField();
+        add(new JLabel("Digite o valor em Reais (BRL):"));
+        add(campoValor);
+
+        // Combo box para escolha da moeda
+        String[] moedas = {"USD - Dólar", "EUR - Euro", "GBP - Libra"};
+        comboMoedas = new JComboBox<>(moedas);
+        add(comboMoedas);
+
+        // Botão de conversão
+        JButton botaoConverter = new JButton("Converter");
+        add(botaoConverter);
+
+        // Resultado
+        resultadoLabel = new JLabel("Resultado: ", SwingConstants.CENTER);
+        add(resultadoLabel);
+
+        // Ação do botão
+        botaoConverter.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                converterMoeda();
+            }
+        });
+
+        setLocationRelativeTo(null); // Centralizar janela
+        setVisible(true);
+    }
+
+    private void converterMoeda() {
+        try {
+            double valor = Double.parseDouble(campoValor.getText());
+            double resultado = 0;
+            String moeda = (String) comboMoedas.getSelectedItem();
+
+            switch (comboMoedas.getSelectedIndex()) {
+                case 0: // USD
+                    resultado = valor * 0.20;
+                    break;
+                case 1: // EUR
+                    resultado = valor * 0.18;
+                    break;
+                case 2: // GBP
+                    resultado = valor * 0.15;
+                    break;
+            }
+
+            resultadoLabel.setText(String.format("Resultado: %.2f %s", resultado, moeda.substring(0, 3)));
+        } catch (NumberFormatException ex) {
+            JOptionPane.showMessageDialog(this, "Por favor, digite um valor válido.", "Erro", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+
+    public static void main(String[] args) {
+        new ConversorMoedasSwing();
+    }
+}
+"""
+
+# Salvar o código em um arquivo .java
+file_path = "/mnt/data/ConversorMoedasSwing.java"
+with open(file_path, "w") as file:
+    file.write(java_code)
+
+file_path
+
